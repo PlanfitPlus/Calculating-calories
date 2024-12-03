@@ -45,23 +45,13 @@ body::before {
     position: relative;
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(10px);
-    border-radius: 25px;
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
     padding: 40px;
     margin: 30px auto;
     z-index: 2;
 }
 
 .container::before {
-    content: '';
-    position: absolute;
-    top: 12px;
-    bottom: -12px;
-    left: 0;
-    right: 0;
-    background: rgba(0, 0, 0, 0.05);
-    border-radius: 25px;
-    z-index: -1;
+    display: none;
 }
 
 .header {
@@ -818,36 +808,127 @@ html, body {
     body {
         padding: 0;
         margin: 0;
+        overflow-x: hidden;
     }
     
     .container {
         width: 100%;
-        max-width: 100%;
-        padding: 20px;
+        max-width: none;
+        padding: 20px 0;
         margin: 0;
         border-radius: 0;
+        box-shadow: none;
+        background: #fff;
     }
 
     .container::before {
         display: none;
     }
+
+    .personal-info,
+    .form-group,
+    .input-with-icon,
+    .gender-selector,
+    .activity-level,
+    .calculate-btn,
+    .result-section,
+    .nutrition-circle,
+    .water-needs {
+        width: 100%;
+        padding-left: 15px;
+        padding-right: 15px;
+        box-sizing: border-box;
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .input-with-icon input {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .gender-selector {
+        gap: 10px;
+    }
+
+    .gender-option {
+        flex: 1;
+    }
+
+    select {
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .personal-info {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    .form-group {
+        width: 100%;
+        margin: 10px 0;
+        padding: 0;
+    }
+
+    .input-with-icon {
+        width: 100%;
+        margin: 0;
+        padding: 0 15px;
+    }
+
+    .input-with-icon input {
+        width: 100%;
+        box-sizing: border-box;
+        margin: 0;
+    }
+
+    .gender-selector {
+        width: 100%;
+        padding: 0 15px;
+        margin: 10px 0;
+        gap: 10px;
+    }
+
+    .gender-option {
+        flex: 1;
+        margin: 0;
+    }
+
+    .activity-level {
+        width: 100%;
+        padding: 0 15px;
+        margin: 10px 0;
+    }
+
+    .activity-level select {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .calculate-btn {
+        width: calc(100% - 30px);
+        margin: 20px 15px;
+    }
 }
 
 @media (max-width: 480px) {
     .container {
-        width: 100%;
-        padding: 20px;
-        margin: 0;
-        border-radius: 0;
+        padding: 15px 0;
     }
-}
 
-@media (max-width: 380px) {
-    .container {
-        width: 100%;
-        padding: 20px;
-        margin: 0;
-        border-radius: 0;
+    .form-group label {
+        font-size: 0.9em;
+    }
+
+    .input-with-icon input {
+        font-size: 0.9em;
+    }
+
+    .unit {
+        font-size: 0.8em;
     }
 }
 
