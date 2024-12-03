@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="حاسبة السعرات الحرارية - احسب احتياجك اليومي من السعرات الحرارية والعناصر الغذائية">
+    <meta name="keywords" content="حاسبة السعرات الحرارية, السعرات الحرارية, تغذية, صحة, لياقة بدنية">
+    <meta name="author" content="Planfit 360">
+    <meta property="og:title" content="حاسبة السعرات الحرارية - Planfit 360">
+    <meta property="og:description" content="احسب احتياجك اليومي من السعرات الحرارية والعناصر الغذائية بدقة">
+    <meta property="og:image" content="images/og-image.png">
+    <title>حاسبة السعرات الحرارية | Planfit 360</title>
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <i class="fas fa-heartbeat header-icon"></i>
+            <h1>حاسبة السعرات الحرارية اليومية</h1>
+            <p class="subtitle">احسب احتياجك اليومي من السعرات الحرارية بدقة</p>
+        </header>
+
+        <div class="calculator">
+            <div class="progress-bar">
+                <div class="step active">
+                    <i class="fas fa-user"></i>
+                    <span>المعلومات الشخصية</span>
+                </div>
+                <div class="step">
+                    <i class="fas fa-calculator"></i>
+                    <span>النتائج</span>
+                </div>
+            </div>
+
+            <div class="form-container">
+                <div class="form-group">
+                    <label for="gender">
+                        <i class="fas fa-venus-mars"></i>
+                        الجنس:
+                    </label>
+                    <div class="gender-selector">
+                        <div class="gender-option">
+                            <input type="radio" id="male" name="gender" value="male" checked>
+                            <label for="male"><i class="fas fa-male"></i> ذكر</label>
+                        </div>
+                        <div class="gender-option">
+                            <input type="radio" id="female" name="gender" value="female">
+                            <label for="female"><i class="fas fa-female"></i> أنثى</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="age">
+                        <i class="fas fa-birthday-cake"></i>
+                        العمر:
+                    </label>
+                    <div class="input-with-icon">
+                        <input type="number" id="age" placeholder="أدخل عمرك" min="1">
+                        <span class="unit">سنة</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="weight">
+                        <i class="fas fa-weight"></i>
+                        الوزن:
+                    </label>
+                    <div class="input-with-icon">
+                        <input type="number" id="weight" placeholder="أدخل وزنك" min="1">
+                        <span class="unit">كجم</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="height">
+                        <i class="fas fa-ruler-vertical"></i>
+                        الطول:
+                    </label>
+                    <div class="input-with-icon">
+                        <input type="number" id="height" placeholder="أدخل طولك" min="1">
+                        <span class="unit">سم</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="activity">
+                        <i class="fas fa-running"></i>
+                        مستوى النشاط:
+                    </label>
+                    <select id="activity">
+                        <option value="1.2">خامل (قليل أو معدوم النشاط)</option>
+                        <option value="1.375">نشاط خفيف (تمارين 1-3 مرات/أسبوع)</option>
+                        <option value="1.55">نشاط متوسط (تمارين 3-5 مرات/أسبوع)</option>
+                        <option value="1.725">نشاط عالي (تمارين 6-7 مرات/أسبوع)</option>
+                        <option value="1.9">نشاط شاق جداً (تمارين شاقة يومياً)</option>
+                    </select>
+                </div>
+
+                <button onclick="calculateCalories()" class="calculate-btn">
+                    <i class="fas fa-calculator"></i>
+                    احسب السعرات الحرارية
+                </button>
+            </div>
+
+            <div id="result" class="result">
+                <!-- النتائج ستظهر هنا -->
+            </div>
+
+            <div class="info-cards">
+                <div class="info-card">
+                    <i class="fas fa-info-circle"></i>
+                    <h3>ما هو معدل الأيض الأساسي (BMR)؟</h3>
+                    <p>هو عدد السعرات الحرارية التي يحتاجها جسمك للقيام بالوظائف الأساسية في حالة الراحة التامة.</p>
+                </div>
+                <div class="info-card">
+                    <i class="fas fa-lightbulb"></i>
+                    <h3>نصائح غذائية</h3>
+                    <p>تناول وجبات متوازنة تحتوي على البروتين والكربوهيدرات والدهون الصحية.</p>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>تم التطوير بواسطة Planfit 360 <i class="fas fa-heart"></i> لمساعدتك في رحلة صحتك</p>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
