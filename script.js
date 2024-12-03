@@ -1,197 +1,1005 @@
-// تحديث شريط التقدم
-function updateProgressBar(step) {
-    const steps = document.querySelectorAll('.step');
-    steps.forEach((s, index) => {
-        if (index < step) {
-            s.classList.add('active');
-        } else {
-            s.classList.remove('active');
-        }
-    });
+:root {
+    --primary-color: #2196f3;
+    --secondary-color: #1a237e;
+    --accent-color: #e3f2fd;
+    --text-color: #333;
+    --border-radius: 12px;
+    --transition: all 0.3s ease;
+    --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    --gradient: linear-gradient(135deg, #00c6fb 0%, #005bea 100%);
 }
 
-function calculateCalories() {
-    // التحقق من المدخلات
-    const age = parseFloat(document.getElementById('age').value);
-    const weight = parseFloat(document.getElementById('weight').value);
-    const height = parseFloat(document.getElementById('height').value);
-    const activity = parseFloat(document.getElementById('activity').value);
-    const gender = document.querySelector('input[name="gender"]:checked').value;
-    
-    // التحقق من صحة المدخلات
-    if (!validateInputs(age, weight, height)) {
-        showResult('<div class="error"><i class="fas fa-exclamation-circle"></i> الرجاء إدخال قيم صحيحة لجميع الحقول</div>');
-        return;
-    }
-
-    // حساب معدل الأيض الأساسي (BMR)
-    let bmr;
-    if (gender === 'male') {
-        // معادلة هاريس-بينيدكت للرجال
-        bmr = 88.362 + (13.397 * weight) + (4.799 * height) - (5.677 * age);
-    } else {
-        // معادلة هاريس-بينيدكت للنساء
-        bmr = 447.593 + (9.247 * weight) + (3.098 * height) - (4.330 * age);
-    }
-
-    // حساب السعرات الحرارية اليومية المطلوبة
-    const dailyCalories = Math.round(bmr * activity);
-    
-    // حساب احتياج الماء اليومي (مل)
-    const waterNeeds = Math.round(weight * 30); // 30 مل لكل كيلوغرام من وزن الجسم
-    
-    // حساب نسب العناصر الغذائية الموصى بها
-    const protein = Math.round(dailyCalories * 0.3 / 4); // 30% من السعرات الحرارية، 4 سعرات لكل غرام
-    const carbs = Math.round(dailyCalories * 0.5 / 4);   // 50% من السعرات الحرارية، 4 سعرات لكل غرام
-    const fats = Math.round(dailyCalories * 0.2 / 9);    // 20% من السعرات الحرارية، 9 سعرات لكل غرام
-    
-    // تحديث شريط التقدم
-    updateProgressBar(2);
-
-    // عرض النتائج
-    displayResults(dailyCalories, bmr, protein, carbs, fats, waterNeeds / 1000);
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-function displayResults(calories, bmr, protein, carbs, fats, water) {
-    const resultSection = document.querySelector('.result');
-    resultSection.style.display = 'block';
-    
-    // إنشاء العناصر الرئيسية
-    const mainMetrics = `
-        <div class="result-header">
-            <i class="fas fa-chart-pie"></i>
-            <h3>نتائج حساب السعرات الحرارية</h3>
-        </div>
-        <div class="result-content">
-            <div class="main-metrics">
-                <div class="metric-card">
-                    <i class="fas fa-fire"></i>
-                    <div class="metric-value">${calories.toFixed(0)}</div>
-                    <div class="metric-label">السعرات الحرارية اليومية</div>
-                </div>
-                <div class="metric-card">
-                    <i class="fas fa-heartbeat"></i>
-                    <div class="metric-value">${bmr.toFixed(0)}</div>
-                    <div class="metric-label">معدل الأيض الأساسي</div>
-                </div>
-            </div>
-
-            <div class="nutrition-circle">
-                <div class="nutrition-header">
-                    <h4>توزيع العناصر الغذائية</h4>
-                </div>
-                <div class="nutrition-content">
-                    <div class="chart-container">
-                        <canvas id="nutritionChart"></canvas>
-                    </div>
-                    <div class="nutrition-details">
-                        <div class="nutrition-item protein">
-                            <i class="fas fa-drumstick-bite"></i>
-                            <div class="nutrition-item-content">
-                                <div class="nutrition-item-label">البروتين</div>
-                                <div class="nutrition-item-value">${protein.toFixed(0)} جرام</div>
-                            </div>
-                        </div>
-                        <div class="nutrition-item carbs">
-                            <i class="fas fa-bread-slice"></i>
-                            <div class="nutrition-item-content">
-                                <div class="nutrition-item-label">الكربوهيدرات</div>
-                                <div class="nutrition-item-value">${carbs.toFixed(0)} جرام</div>
-                            </div>
-                        </div>
-                        <div class="nutrition-item fats">
-                            <i class="fas fa-cheese"></i>
-                            <div class="nutrition-item-content">
-                                <div class="nutrition-item-label">الدهون</div>
-                                <div class="nutrition-item-value">${fats.toFixed(0)} جرام</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="water-needs">
-                <div class="water-content">
-                    <div class="water-icon">
-                        <i class="fas fa-tint"></i>
-                    </div>
-                    <div class="water-info">
-                        <h4>احتياجات الماء اليومية</h4>
-                        <div class="water-value">${water.toFixed(1)} لتر</div>
-                        <div class="water-tips">
-                            <ul>
-                                <li>اشرب الماء بانتظام على مدار اليوم</li>
-                                <li>زيد كمية الماء خلال التمارين</li>
-                                <li>راقب لون البول للتأكد من كفاية شرب الماء</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    `;
-
-    resultSection.innerHTML = mainMetrics;
-
-    // إنشاء الرسم البياني للعناصر الغذائية
-    const ctx = document.getElementById('nutritionChart').getContext('2d');
-    new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-            labels: ['البروتين', 'الكربوهيدرات', 'الدهون'],
-            datasets: [{
-                data: [protein, carbs, fats],
-                backgroundColor: ['#FF6B6B', '#4ECDC4', '#45B7D1'],
-                borderWidth: 0,
-                borderRadius: 5
-            }]
-        },
-        options: {
-            cutout: '70%',
-            plugins: {
-                legend: {
-                    display: false
-                }
-            },
-            animation: {
-                animateScale: true,
-                animateRotate: true
-            }
-        }
-    });
-
-    // تمرير إلى النتائج بشكل سلس
-    resultSection.scrollIntoView({ behavior: 'smooth' });
+body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    position: relative;
+    overflow-x: hidden;
 }
 
-function validateInputs(age, weight, height) {
-    return (
-        !isNaN(age) && age > 0 && age < 120 &&
-        !isNaN(weight) && weight > 0 && weight < 300 &&
-        !isNaN(height) && height > 0 && height < 300
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    animation: moveBackground 20s linear infinite;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.container {
+    width: 100%;
+    max-width: 1000px;
+    position: relative;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 25px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
+    padding: 40px;
+    margin: 30px auto;
+    z-index: 2;
+}
+
+.container::before {
+    content: '';
+    position: absolute;
+    top: 12px;
+    bottom: -12px;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 25px;
+    z-index: -1;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 20px;
+    background: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    position: relative;
+    overflow: hidden;
+}
+
+.header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: var(--gradient);
+}
+
+.header-icon {
+    font-size: 48px;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+    animation: float 3s ease-in-out infinite;
+    display: inline-block;
+}
+
+.header h1 {
+    color: var(--secondary-color);
+    font-size: 2.2em;
+    margin: 10px 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.subtitle {
+    color: #666;
+    margin-top: 10px;
+    font-size: 1.1em;
+}
+
+.calculator {
+    background-color: white;
+    padding: 30px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    transition: var(--transition);
+    position: relative;
+}
+
+.calculator:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+.progress-bar {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    position: relative;
+    padding: 0 40px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.progress-bar::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: #e0e0e0;
+    transform: translateY(-50%);
+}
+
+.step {
+    background: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+    transition: var(--transition);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.step.active {
+    background: var(--gradient);
+    color: white;
+    transform: scale(1.1);
+}
+
+.step span {
+    position: absolute;
+    bottom: -25px;
+    font-size: 12px;
+    white-space: nowrap;
+    font-weight: 500;
+    color: var(--secondary-color);
+}
+
+.form-container {
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: var(--border-radius);
+    margin: 20px 0;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: var(--border-radius);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    margin-top: 30px;
+}
+
+.form-group {
+    margin-bottom: 25px;
+    position: relative;
+    animation: fadeInUp 0.5s ease forwards;
+    animation-delay: calc(var(--animation-order) * 0.1s);
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--text-color);
+    font-weight: bold;
+    transition: var(--transition);
+}
+
+.form-group:hover label {
+    color: var(--primary-color);
+}
+
+label i {
+    margin-left: 8px;
+    color: var(--primary-color);
+    transition: var(--transition);
+}
+
+.form-group:hover label i {
+    transform: scale(1.2);
+}
+
+.gender-selector {
+    display: flex;
+    gap: 20px;
+}
+
+.gender-option {
+    flex: 1;
+    position: relative;
+}
+
+.gender-option input[type="radio"] {
+    display: none;
+}
+
+.gender-option label {
+    display: block;
+    padding: 15px;
+    text-align: center;
+    background: white;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: var(--transition);
+    border: 2px solid transparent;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.gender-option label:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.gender-option input[type="radio"]:checked + label {
+    background: var(--gradient);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.input-with-icon {
+    position: relative;
+}
+
+input, select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: var(--border-radius);
+    font-size: 16px;
+    transition: var(--transition);
+    background: white;
+}
+
+.unit {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #666;
+    background: white;
+    padding: 0 5px;
+    font-size: 0.9em;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+}
+
+.calculate-btn {
+    width: 100%;
+    padding: 15px;
+    background: var(--gradient);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    position: relative;
+    overflow: hidden;
+    position: relative;
+    overflow: hidden;
+}
+
+.calculate-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent
     );
+    transition: 0.5s;
 }
 
-function showResult(message) {
-    const resultDiv = document.getElementById('result');
-    resultDiv.innerHTML = message;
-    resultDiv.style.display = 'block';
-    resultDiv.classList.add('show');
-    
-    // تمرير إلى النتائج
-    resultDiv.scrollIntoView({ behavior: 'smooth' });
+.calculate-btn:hover::before {
+    left: 100%;
 }
 
-// إضافة مستمعي الأحداث عند تحميل الصفحة
-document.addEventListener('DOMContentLoaded', () => {
-    // تحديث شريط التقدم عند البداية
-    updateProgressBar(1);
+.result {
+    margin-top: 30px;
+    padding: 0;
+    border-radius: var(--border-radius);
+    background: white;
+    display: none;
+    animation: slideIn 0.5s ease;
+    box-shadow: var(--box-shadow);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.result-header {
+    background: var(--gradient);
+    color: white;
+    text-align: center;
+    padding: 25px;
+    position: relative;
+    overflow: hidden;
+}
+
+.result-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    animation: shine 3s infinite;
+}
+
+.result-header i {
+    font-size: 3em;
+    margin-bottom: 15px;
+    display: inline-block;
+    animation: float 3s infinite;
+}
+
+.result-header h3 {
+    font-size: 1.8em;
+    margin: 10px 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.result-content {
+    padding: 25px;
+}
+
+.result-card {
+    background: #f8f9fa;
+    border-radius: var(--border-radius);
+    padding: 20px;
+    margin-bottom: 20px;
+    transition: var(--transition);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.result-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.result-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--gradient);
+}
+
+.main-metrics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.metric-card {
+    background: white;
+    padding: 20px;
+    border-radius: var(--border-radius);
+    text-align: center;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.metric-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--gradient);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.metric-card:hover::before {
+    transform: scaleX(1);
+}
+
+.metric-card i {
+    font-size: 2.5em;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+    display: inline-block;
+    transition: var(--transition);
+}
+
+.metric-card:hover i {
+    transform: scale(1.2);
+}
+
+.metric-value {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: var(--secondary-color);
+    margin: 10px 0;
+}
+
+.metric-label {
+    color: #666;
+    font-size: 0.9em;
+}
+
+.nutrition-circle {
+    background: white;
+    padding: 30px;
+    border-radius: var(--border-radius);
+    margin: 30px 0;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.nutrition-header {
+    text-align: center;
+    margin-bottom: 25px;
+    color: var(--secondary-color);
+}
+
+.nutrition-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
+    align-items: center;
+}
+
+.chart-container {
+    position: relative;
+    width: 250px;
+    height: 250px;
+    margin: 0 auto;
+}
+
+.nutrition-details {
+    flex: 1;
+    min-width: 250px;
+}
+
+.nutrition-item {
+    background: #f8f9fa;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: var(--border-radius);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    transition: var(--transition);
+}
+
+.nutrition-item:hover {
+    transform: translateX(10px);
+    background: var(--accent-color);
+}
+
+.nutrition-item i {
+    font-size: 1.5em;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.nutrition-item.protein i { color: #FF6B6B; }
+.nutrition-item.carbs i { color: #4ECDC4; }
+.nutrition-item.fats i { color: #45B7D1; }
+
+.nutrition-item-content {
+    flex: 1;
+}
+
+.nutrition-item-label {
+    font-weight: bold;
+    color: var(--secondary-color);
+    margin-bottom: 5px;
+}
+
+.nutrition-item-value {
+    color: #666;
+    font-size: 0.9em;
+}
+
+.water-needs {
+    background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);
+    padding: 30px;
+    border-radius: var(--border-radius);
+    position: relative;
+    overflow: hidden;
+}
+
+.water-needs::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-.895-2-2-2-2 .895-2 2 .895 2 2 2zm63 31c1.657 0 3-1.343 3-3s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM34 90c1.657 0 3-1.343 3-3s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.657 0 3-1.343 3-3s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+    opacity: 0.5;
+}
+
+.water-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+}
+
+.water-icon {
+    font-size: 3em;
+    color: var(--primary-color);
+    animation: float 2s infinite;
+}
+
+.water-info h4 {
+    color: var(--secondary-color);
+    margin-bottom: 15px;
+    font-size: 1.2em;
+}
+
+.water-value {
+    font-size: 1.5em;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+
+.water-tips {
+    background: white;
+    padding: 15px;
+    border-radius: var(--border-radius);
+    margin-top: 20px;
+}
+
+.water-tips ul {
+    list-style: none;
+    padding: 0;
+}
+
+.water-tips li {
+    margin: 10px 0;
+    padding-right: 25px;
+    position: relative;
+}
+
+.water-tips li::before {
+    content: '💧';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.footer {
+    text-align: center;
+    margin-top: 30px;
+    padding: 20px;
+    color: #666;
+    background: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    color: white;
+    padding: 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.5), transparent);
+}
+
+.footer i {
+    color: #e91e63;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+@keyframes float {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0); }
+}
+
+@keyframes shine {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes rotateIn {
+    from {
+        opacity: 0;
+        transform: rotate(-180deg);
+    }
+    to {
+        opacity: 1;
+        transform: rotate(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.logo {
+    max-width: 150px;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.loading-bar {
+    height: 3px;
+    width: 100%;
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform-origin: left;
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.back-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    background: var(--gradient);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1000;
+}
+
+.back-to-top.visible {
+    opacity: 1;
+}
+
+.loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.loading.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 3px solid var(--primary-color);
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* إضافة التمرير السلس */
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* منع التكبير والتصغير على الأجهزة المحمولة */
+html, body {
+    touch-action: manipulation;
+    -ms-touch-action: manipulation;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* منع التكبير عند النقر المزدوج على الأيفون */
+* { 
+    touch-action: pan-y pan-x;
+}
+
+/* منع التكبير في Safari على iOS */
+@supports (-webkit-touch-callout: none) {
+    body {
+        -webkit-text-size-adjust: none;
+    }
+}
+
+@media (max-width: 1024px) {
+    .container {
+        max-width: 800px;
+        padding: 35px;
+        margin: 25px auto;
+        border-radius: 20px;
+    }
     
-    // إضافة التحقق من المدخلات أثناء الكتابة
-    const inputs = document.querySelectorAll('input[type="number"]');
-    inputs.forEach(input => {
-        input.addEventListener('input', function() {
-            if (this.value < 0) this.value = 0;
-        });
-    });
-});
+    .container::before {
+        top: 10px;
+        bottom: -10px;
+        border-radius: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        padding: 0;
+        margin: 0;
+    }
+    
+    .container {
+        width: 100%;
+        max-width: 100%;
+        padding: 20px;
+        margin: 0;
+        border-radius: 0;
+    }
+
+    .container::before {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        width: 100%;
+        padding: 20px;
+        margin: 0;
+        border-radius: 0;
+    }
+}
+
+@media (max-width: 380px) {
+    .container {
+        width: 100%;
+        padding: 20px;
+        margin: 0;
+        border-radius: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    .container {
+        width: 100%;
+        max-width: 100%;
+        padding: 20px;
+        margin: 20px auto;
+    }
+
+    .container::before {
+        top: 8px;
+        bottom: -8px;
+        border-radius: 25px 25px 0 0;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .input-with-icon {
+        width: 100%;
+    }
+
+    .input-with-icon input {
+        width: calc(100% - 40px);
+    }
+
+    .gender-selector {
+        flex-direction: row;
+        justify-content: space-around;
+    }
+
+    .gender-option {
+        margin: 0;
+        width: 45%;
+    }
+
+    .calculate-btn {
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    .result-content {
+        padding: 15px;
+    }
+
+    .nutrition-content {
+        flex-direction: column;
+    }
+
+    .chart-container {
+        width: 200px;
+        height: 200px;
+        margin: 0 auto 20px;
+    }
+
+    .nutrition-details {
+        width: 100%;
+    }
+
+    .water-content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 15px;
+    }
+
+    .water-icon {
+        margin-bottom: 15px;
+    }
+
+    .info-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .header h1 {
+        font-size: 1.5em;
+    }
+
+    .subtitle {
+        font-size: 0.9em;
+    }
+
+    .water-needs {
+        padding: 20px;
+    }
+
+    .water-value {
+        font-size: 1.3em;
+        margin-bottom: 10px;
+    }
+
+    .water-tips ul {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+    }
+
+    .water-tips li {
+        flex: 0 1 auto;
+        margin: 0;
+        padding: 8px 30px 8px 8px;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 15px;
+        font-size: 0.9em;
+        white-space: nowrap;
+    }
+
+    .water-tips li::before {
+        right: 8px;
+    }
+}
+
+@media (max-width: 380px) {
+    .container {
+        width: 100%;
+        min-width: 320px;
+        border-radius: 15px;
+    }
+
+    .form-group label {
+        font-size: 0.9em;
+    }
+
+    .input-with-icon input {
+        font-size: 0.9em;
+    }
+
+    .unit {
+        font-size: 0.8em;
+    }
+}
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .container {
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+}
+
+@media print {
+    .no-print {
+        display: none;
+    }
+    
+    .result {
+        page-break-inside: avoid;
+    }
+}
