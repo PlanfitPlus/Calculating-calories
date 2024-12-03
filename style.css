@@ -41,23 +41,27 @@ body::before {
 
 .container {
     width: 100%;
-    max-width: 800px;
+    max-width: 1000px;
     position: relative;
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(10px);
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    padding: 30px;
-    z-index: 1;
+    border-radius: 25px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
+    padding: 40px;
+    margin: 30px auto;
+    z-index: 2;
 }
 
-@keyframes moveBackground {
-    0% {
-        background-position: 0 0;
-    }
-    100% {
-        background-position: 60px 60px;
-    }
+.container::before {
+    content: '';
+    position: absolute;
+    top: 12px;
+    bottom: -12px;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 25px;
+    z-index: -1;
 }
 
 .header {
@@ -762,6 +766,16 @@ input:focus, select:focus {
     }
 }
 
+/* إضافة التمرير السلس */
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
 /* منع التكبير والتصغير على الأجهزة المحمولة */
 html, body {
     touch-action: manipulation;
@@ -785,44 +799,198 @@ html, body {
     }
 }
 
+@media (max-width: 1024px) {
+    .container {
+        max-width: 800px;
+        padding: 35px;
+        margin: 25px auto;
+        border-radius: 20px;
+    }
+    
+    .container::before {
+        top: 10px;
+        bottom: -10px;
+        border-radius: 20px;
+    }
+}
+
 @media (max-width: 768px) {
-    .calculator {
-        padding: 20px;
-    }
-    
-    .progress-bar {
-        padding: 0 20px;
-    }
-    
-    .info-cards {
-        grid-template-columns: 1fr;
-    }
-    
-    .nutrition-circle {
-        flex-direction: column;
-        align-items: center;
-    }
-    
-    .water-needs {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
+    body {
+        padding: 0;
+        margin: 0;
     }
     
     .container {
+        width: 100%;
+        max-width: 100%;
+        padding: 20px;
+        margin: 0;
+        border-radius: 0;
+    }
+
+    .container::before {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        width: 100%;
+        padding: 20px;
+        margin: 0;
+        border-radius: 0;
+    }
+}
+
+@media (max-width: 380px) {
+    .container {
+        width: 100%;
+        padding: 20px;
+        margin: 0;
+        border-radius: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
         padding: 10px;
     }
-    
+
+    .container {
+        width: 100%;
+        max-width: 100%;
+        padding: 20px;
+        margin: 20px auto;
+    }
+
+    .container::before {
+        top: 8px;
+        bottom: -8px;
+        border-radius: 25px 25px 0 0;
+    }
+
     .form-group {
         margin-bottom: 15px;
     }
-    
+
+    .input-with-icon {
+        width: 100%;
+    }
+
+    .input-with-icon input {
+        width: calc(100% - 40px);
+    }
+
+    .gender-selector {
+        flex-direction: row;
+        justify-content: space-around;
+    }
+
+    .gender-option {
+        margin: 0;
+        width: 45%;
+    }
+
+    .calculate-btn {
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    .result-content {
+        padding: 15px;
+    }
+
     .nutrition-content {
         flex-direction: column;
     }
-    
+
     .chart-container {
-        margin-bottom: 20px;
+        width: 200px;
+        height: 200px;
+        margin: 0 auto 20px;
+    }
+
+    .nutrition-details {
+        width: 100%;
+    }
+
+    .water-content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 15px;
+    }
+
+    .water-icon {
+        margin-bottom: 15px;
+    }
+
+    .info-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .header h1 {
+        font-size: 1.5em;
+    }
+
+    .subtitle {
+        font-size: 0.9em;
+    }
+
+    .water-needs {
+        padding: 20px;
+    }
+
+    .water-value {
+        font-size: 1.3em;
+        margin-bottom: 10px;
+    }
+
+    .water-tips ul {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+    }
+
+    .water-tips li {
+        flex: 0 1 auto;
+        margin: 0;
+        padding: 8px 30px 8px 8px;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 15px;
+        font-size: 0.9em;
+        white-space: nowrap;
+    }
+
+    .water-tips li::before {
+        right: 8px;
+    }
+}
+
+@media (max-width: 380px) {
+    .container {
+        width: 100%;
+        min-width: 320px;
+        border-radius: 15px;
+    }
+
+    .form-group label {
+        font-size: 0.9em;
+    }
+
+    .input-with-icon input {
+        font-size: 0.9em;
+    }
+
+    .unit {
+        font-size: 0.8em;
+    }
+}
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .container {
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     }
 }
 
