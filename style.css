@@ -806,246 +806,87 @@ html, body {
 
 @media (max-width: 768px) {
     body {
-        padding: 0;
-        margin: 0;
-        overflow-x: hidden;
+        padding: 10px;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
     
     .container {
-        width: 100%;
-        max-width: none;
-        padding: 20px 0;
-        margin: 0;
-        border-radius: 0;
-        box-shadow: none;
-        background: #fff;
+        width: 480px;
+        padding: 15px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
-    .container::before {
-        display: none;
+    .form-container {
+        width: 100%;
+        max-width: 480px;
+        margin: 0 auto;
+        padding: 15px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
-    .personal-info,
-    .form-group,
-    .input-with-icon,
-    .gender-selector,
-    .activity-level,
-    .calculate-btn,
-    .result-section,
-    .nutrition-circle,
-    .water-needs {
+    .form-group {
         width: 100%;
-        padding-left: 15px;
-        padding-right: 15px;
-        box-sizing: border-box;
-        margin-left: 0;
-        margin-right: 0;
+        margin-bottom: 12px;
+        padding: 0 10px;
+    }
+
+    .form-group label {
+        font-size: 14px;
+        margin-bottom: 5px;
+    }
+
+    .input-with-icon {
+        width: 100%;
     }
 
     .input-with-icon input {
         width: 100%;
-        box-sizing: border-box;
+        padding: 8px;
+        font-size: 14px;
+        height: 40px;
+    }
+
+    .unit {
+        font-size: 12px;
+        left: auto;
+        right: 10px;
     }
 
     .gender-selector {
-        gap: 10px;
+        width: 100%;
+        gap: 8px;
+        padding: 0 10px;
     }
 
     .gender-option {
-        flex: 1;
+        padding: 8px;
+    }
+
+    .gender-option label {
+        font-size: 14px;
     }
 
     select {
         width: 100%;
-    }
-}
-
-@media (max-width: 768px) {
-    .personal-info {
-        width: 100%;
-        margin: 0;
-        padding: 0;
-    }
-
-    .form-group {
-        width: 100%;
-        margin: 10px 0;
-        padding: 0;
-    }
-
-    .input-with-icon {
-        width: 100%;
-        margin: 0;
-        padding: 0 15px;
-    }
-
-    .input-with-icon input {
-        width: 100%;
-        box-sizing: border-box;
-        margin: 0;
-    }
-
-    .gender-selector {
-        width: 100%;
-        padding: 0 15px;
-        margin: 10px 0;
-        gap: 10px;
-    }
-
-    .gender-option {
-        flex: 1;
-        margin: 0;
-    }
-
-    .activity-level {
-        width: 100%;
-        padding: 0 15px;
-        margin: 10px 0;
-    }
-
-    .activity-level select {
-        width: 100%;
-        box-sizing: border-box;
-    }
-
-    .calculate-btn {
-        width: calc(100% - 30px);
-        margin: 20px 15px;
-    }
-}
-
-@media (max-width: 480px) {
-    .container {
-        padding: 15px 0;
-    }
-
-    .form-group label {
-        font-size: 0.9em;
-    }
-
-    .input-with-icon input {
-        font-size: 0.9em;
-    }
-
-    .unit {
-        font-size: 0.8em;
-    }
-}
-
-@media (max-width: 768px) {
-    body {
-        padding: 10px;
-    }
-
-    .container {
-        width: 100%;
-        max-width: 100%;
-        padding: 20px;
-        margin: 20px auto;
-    }
-
-    .container::before {
-        top: 8px;
-        bottom: -8px;
-        border-radius: 25px 25px 0 0;
-    }
-
-    .form-group {
-        margin-bottom: 15px;
-    }
-
-    .input-with-icon {
-        width: 100%;
-    }
-
-    .input-with-icon input {
-        width: calc(100% - 40px);
-    }
-
-    .gender-selector {
-        flex-direction: row;
-        justify-content: space-around;
-    }
-
-    .gender-option {
-        margin: 0;
-        width: 45%;
-    }
-
-    .calculate-btn {
-        width: 100%;
-        margin-top: 20px;
-    }
-
-    .result-content {
-        padding: 15px;
-    }
-
-    .nutrition-content {
-        flex-direction: column;
-    }
-
-    .chart-container {
-        width: 200px;
-        height: 200px;
-        margin: 0 auto 20px;
-    }
-
-    .nutrition-details {
-        width: 100%;
-    }
-
-    .water-content {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        gap: 15px;
-    }
-
-    .water-icon {
-        margin-bottom: 15px;
-    }
-
-    .info-cards {
-        grid-template-columns: 1fr;
+        padding: 8px;
+        height: 40px;
+        font-size: 14px;
     }
 
     .header h1 {
-        font-size: 1.5em;
+        font-size: 1.8em;
     }
 
     .subtitle {
-        font-size: 0.9em;
-    }
-
-    .water-needs {
-        padding: 20px;
-    }
-
-    .water-value {
-        font-size: 1.3em;
-        margin-bottom: 10px;
-    }
-
-    .water-tips ul {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        justify-content: center;
-    }
-
-    .water-tips li {
-        flex: 0 1 auto;
-        margin: 0;
-        padding: 8px 30px 8px 8px;
-        background: rgba(255, 255, 255, 0.9);
-        border-radius: 15px;
-        font-size: 0.9em;
-        white-space: nowrap;
-    }
-
-    .water-tips li::before {
-        right: 8px;
+        font-size: 1em;
     }
 }
 
