@@ -815,7 +815,7 @@ html, body {
     
     .container {
         width: 100%;
-        padding: 15px;
+        padding: 0;
         margin: 0;
         display: flex;
         flex-direction: column;
@@ -825,68 +825,34 @@ html, body {
     .form-container {
         width: 100%;
         margin: 0;
-        padding: 15px 0;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+        padding: 0;
     }
 
     .form-group {
         width: 100%;
-        max-width: 475px;
-        margin: 0 auto 12px auto;
-        padding: 0 15px;
-    }
-
-    .form-group label {
-        font-size: 14px;
-        margin-bottom: 5px;
+        margin: 0 0 12px 0;
+        padding: 10px 15px;
     }
 
     .input-with-icon {
         width: 100%;
+        padding: 0;
     }
 
     .input-with-icon input {
         width: 100%;
-        padding: 8px;
-        font-size: 14px;
-        height: 40px;
-    }
-
-    .unit {
-        font-size: 12px;
-        left: auto;
-        right: 10px;
+        border-radius: 0;
     }
 
     .gender-selector {
         width: 100%;
-        gap: 8px;
-        padding: 0 10px;
-    }
-
-    .gender-option {
-        padding: 8px;
-    }
-
-    .gender-option label {
-        font-size: 14px;
+        padding: 0 15px;
+        margin: 0 0 12px 0;
     }
 
     select {
         width: 100%;
-        padding: 8px;
-        height: 40px;
-        font-size: 14px;
-    }
-
-    .header h1 {
-        font-size: 1.8em;
-    }
-
-    .subtitle {
-        font-size: 1em;
+        border-radius: 0;
     }
 }
 
