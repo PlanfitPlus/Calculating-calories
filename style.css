@@ -891,3 +891,52 @@ html, body {
         page-break-inside: avoid;
     }
 }
+
+@media screen and (max-width: 480px) {
+    body {
+        padding: 0;
+        margin: 0;
+        width: 100%;
+    }
+    
+    .container {
+        width: 100vw;
+        max-width: 100%;
+        padding: 0;
+        margin: 0;
+        border-radius: 0;
+    }
+
+    .form-container {
+        width: 100vw;
+        max-width: 100%;
+        padding: 0;
+        margin: 0;
+    }
+
+    .form-group {
+        width: 100%;
+        padding: 10px;
+        margin: 0 0 10px 0;
+    }
+
+    .input-with-icon {
+        width: 100%;
+    }
+
+    .input-with-icon input {
+        width: 100%;
+        margin: 0;
+    }
+
+    .gender-selector {
+        width: 100%;
+        padding: 10px;
+        margin: 0;
+    }
+
+    select#activity {
+        width: 100%;
+        margin: 0;
+    }
+}
