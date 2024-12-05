@@ -814,7 +814,7 @@ html, body {
     }
     
     .container {
-        width: 470px;
+        width: 460px;
         padding: 15px;
         margin: 0 auto;
         display: flex;
@@ -823,7 +823,7 @@ html, body {
     }
 
     .form-container {
-        width: 470px;
+        width: 460px;
         background: #fff;
         margin: 0 auto;
         padding: 15px;
