@@ -860,21 +860,21 @@ html, body {
     }
     
     .container {
-        width: 480px;
-        padding: 20px;
+        width: 280px;
+        padding: 15px;
         margin: 0 auto;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
     }
 
     .form-container {
         width: 280px;
-        margin: 0 auto;
-        padding: 20px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+        margin: 0;
+        padding: 10px;
+    }
+
+    .calculator {
+        width: 280px;
+        margin: 0;
+        padding: 10px;
     }
 
     .form-group {
@@ -886,94 +886,8 @@ html, body {
         width: 100%;
     }
 
-    .input-with-icon input {
-        width: calc(100% - 40px);
-    }
-
     .gender-selector {
-        flex-direction: row;
-        justify-content: space-around;
-    }
-
-    .gender-option {
-        margin: 0;
-        width: 45%;
-    }
-
-    .calculate-btn {
         width: 100%;
-        margin-top: 20px;
-    }
-
-    .result-content {
-        padding: 15px;
-    }
-
-    .nutrition-content {
-        flex-direction: column;
-    }
-
-    .chart-container {
-        width: 200px;
-        height: 200px;
-        margin: 0 auto 20px;
-    }
-
-    .nutrition-details {
-        width: 100%;
-    }
-
-    .water-content {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        gap: 15px;
-    }
-
-    .water-icon {
-        margin-bottom: 15px;
-    }
-
-    .info-cards {
-        grid-template-columns: 1fr;
-    }
-
-    .header h1 {
-        font-size: 1.5em;
-    }
-
-    .subtitle {
-        font-size: 0.9em;
-    }
-
-    .water-needs {
-        padding: 20px;
-    }
-
-    .water-value {
-        font-size: 1.3em;
-        margin-bottom: 10px;
-    }
-
-    .water-tips ul {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        justify-content: center;
-    }
-
-    .water-tips li {
-        flex: 0 1 auto;
-        margin: 0;
-        padding: 8px 30px 8px 8px;
-        background: rgba(255, 255, 255, 0.9);
-        border-radius: 15px;
-        font-size: 0.9em;
-        white-space: nowrap;
-    }
-
-    .water-tips li::before {
-        right: 8px;
     }
 }
 
