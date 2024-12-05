@@ -860,8 +860,8 @@ html, body {
     }
     
     .container {
-        width: 465px;
-        padding: 20px;
+        width: 270px;
+        padding: 15px;
         margin: 0 auto;
         display: flex;
         flex-direction: column;
@@ -869,9 +869,9 @@ html, body {
     }
 
     .form-container {
-        width: 465px;
+        width: 270px;
         margin: 0 auto;
-        padding: 20px;
+        padding: 15px;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -879,30 +879,26 @@ html, body {
 
     .form-group {
         width: 100%;
-        margin-bottom: 15px;
+        margin-bottom: 12px;
     }
 
-    .input-with-icon {
-        width: 100%;
+    .input-with-icon input,
+    .form-group select {
+        font-size: 14px;
+        padding: 8px 12px;
     }
 
-    .input-with-icon input {
-        width: calc(100% - 40px);
+    .form-group label {
+        font-size: 14px;
     }
 
-    .gender-selector {
-        flex-direction: row;
-        justify-content: space-around;
-    }
-
-    .gender-option {
-        margin: 0;
-        width: 45%;
+    .unit {
+        font-size: 12px;
     }
 
     .calculate-btn {
-        width: 100%;
-        margin-top: 20px;
+        padding: 12px;
+        font-size: 14px;
     }
 
     .result-content {
