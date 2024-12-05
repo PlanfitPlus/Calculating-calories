@@ -830,7 +830,7 @@ html, body {
     }
 
     .form-group {
-        width: 470px;
+        width: 460px;
         margin: 0 auto 12px auto;
         padding: 0;
     }
@@ -844,12 +844,12 @@ html, body {
     }
 
     .gender-selector {
-        width: 470px;
+        width: 460px;
         margin: 0 auto 12px auto;
     }
 
     select#activity {
-        width: 470px;
+        width: 460px;
         margin: 0 auto;
     }
 }
