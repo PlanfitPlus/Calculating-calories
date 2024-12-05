@@ -1,12 +1,12 @@
 :root {
     --primary-color: #2196f3;
-    --secondary-color: #1a237e;
+    --secondary-color: #1565c0;
     --accent-color: #e3f2fd;
-    --text-color: #333;
+    --text-color: #2c3e50;
     --border-radius: 12px;
     --transition: all 0.3s ease;
-    --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    --gradient: linear-gradient(135deg, #00c6fb 0%, #005bea 100%);
+    --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    --gradient: linear-gradient(135deg, #2196f3 0%, #1565c0 100%);
 }
 
 * {
@@ -17,13 +17,14 @@
 }
 
 body {
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    background: linear-gradient(135deg, #f5f7fa 0%, #e3f2fd 100%);
     min-height: 100vh;
     display: flex;
     justify-content: center;
     padding: 20px;
     position: relative;
     overflow-x: hidden;
+    color: var(--text-color);
 }
 
 body::before {
@@ -43,11 +44,13 @@ body::before {
     width: 100%;
     max-width: 1000px;
     position: relative;
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.98);
     backdrop-filter: blur(10px);
     padding: 40px;
     margin: 30px auto;
     z-index: 2;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: var(--box-shadow);
 }
 
 .container::before {
@@ -58,7 +61,9 @@ body::before {
     text-align: center;
     margin-bottom: 30px;
     padding: 20px;
-    background: white;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    border-bottom: 3px solid var(--primary-color);
+    animation: slideDown 0.5s ease;
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow);
     position: relative;
@@ -181,12 +186,24 @@ body::before {
     animation-delay: calc(var(--animation-order) * 0.1s);
 }
 
+.form-group input,
+.form-group select {
+    transition: all 0.3s ease;
+    border: 2px solid #e0e0e0;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 10px rgba(33, 150, 243, 0.1);
+    transform: translateY(-1px);
+}
+
 .form-group label {
     display: block;
     margin-bottom: 8px;
     color: var(--text-color);
-    font-weight: bold;
-    transition: var(--transition);
+    font-weight: 500;
 }
 
 .form-group:hover label {
@@ -274,20 +291,20 @@ input:focus, select:focus {
 .calculate-btn {
     width: 100%;
     padding: 15px;
-    background: var(--gradient);
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
     color: white;
     border: none;
     border-radius: var(--border-radius);
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
-    transition: var(--transition);
+    transition: all 0.3s ease;
+    transform: translateY(0);
+    box-shadow: 0 4px 15px rgba(33, 150, 243, 0.2);
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
-    position: relative;
-    overflow: hidden;
     position: relative;
     overflow: hidden;
 }
@@ -308,6 +325,11 @@ input:focus, select:focus {
     transition: 0.5s;
 }
 
+.calculate-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(33, 150, 243, 0.3);
+}
+
 .calculate-btn:hover::before {
     left: 100%;
 }
@@ -318,7 +340,7 @@ input:focus, select:focus {
     border-radius: var(--border-radius);
     background: white;
     display: none;
-    animation: slideIn 0.5s ease;
+    animation: fadeIn 0.5s ease;
     box-shadow: var(--box-shadow);
     border: 1px solid rgba(0, 0, 0, 0.1);
     overflow: hidden;
@@ -328,7 +350,9 @@ input:focus, select:focus {
     background: var(--gradient);
     color: white;
     text-align: center;
-    padding: 25px;
+    padding: 15px;
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
+    margin: -20px -20px 20px -20px;
     position: relative;
     overflow: hidden;
 }
@@ -543,7 +567,7 @@ input:focus, select:focus {
     left: 0;
     right: 0;
     bottom: 0;
-    background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-.895-2-2-2-2 .895-2 2 .895 2 2 2zm63 31c1.657 0 3-1.343 3-3s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM34 90c1.657 0 3-1.343 3-3s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.657 0 3-1.343 3-3s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+    background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-.895-2-2-2-2 .895-2 2 .895 2 2 2zm63 31c1.657 0 3-1.343 3-3s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM34 90c1.657 0 3-1.343 3-3s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.657 0 3-1.343 3-3s-.895-2-2-2-2 .895-2 2 .895 2 2 2'/%3E%3C/svg%3E");
     opacity: 0.5;
 }
 
@@ -680,6 +704,28 @@ input:focus, select:focus {
     }
 }
 
+@keyframes slideDown {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 .logo {
     max-width: 150px;
     height: auto;
@@ -807,18 +853,28 @@ html, body {
 @media (max-width: 768px) {
     body {
         padding: 10px;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
     
     .container {
         width: 480px;
         padding: 20px;
-        margin: 10px auto;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     .form-container {
         width: 480px;
         margin: 0 auto;
         padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     .form-group {
