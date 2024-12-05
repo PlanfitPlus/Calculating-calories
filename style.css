@@ -807,12 +807,10 @@ html, body {
 @media (max-width: 768px) {
     body {
         padding: 0;
-        margin: 0;
         min-height: 100vh;
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 100%;
     }
     
     .container {
@@ -828,12 +826,12 @@ html, body {
         width: 100%;
         background: #fff;
         margin: 0;
-        padding: 20px 0;
+        padding: 15px 0;
     }
 
     .form-group {
-        width: 480px;
-        margin: 0 auto 15px auto;
+        width: 470px;
+        margin: 0 auto 12px auto;
         padding: 0;
     }
 
@@ -846,22 +844,13 @@ html, body {
     }
 
     .gender-selector {
-        width: 480px;
-        margin: 0 auto 15px auto;
+        width: 470px;
+        margin: 0 auto 12px auto;
     }
 
     select#activity {
-        width: 480px;
+        width: 470px;
         margin: 0 auto;
-        display: block;
-    }
-
-    .header h1 {
-        font-size: 1.8em;
-    }
-
-    .subtitle {
-        font-size: 1em;
     }
 }
 
